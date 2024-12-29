@@ -368,5 +368,5 @@ const httpsServer = https.createServer(async (request, response) => {
 
 // Secure listener
 httpsServer.listen(port, host, () => {
-    console.log(`Server is running at https://my-api-xo8a.onrender.com`);
+    console.log(`Server is running at https://${host}:${port}`);
 });
