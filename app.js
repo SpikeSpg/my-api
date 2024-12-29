@@ -126,7 +126,8 @@ function urlSegmentation(url) {
 }
 
 function validRequest(response, resource, length, method) {
-    const resources = ['shop', 'pet', 'event', 'customers'];
+    // 'pet', 'event', '
+    const resources = ['shop', 'customers'];
 
     /*
         HEAD /* - Head on all of them.
@@ -343,12 +344,6 @@ async function handleRequest(todo, resource, request, response) {
     metadata(null, response, 500);
     throw new Error('Cannot execute the query');
 }
-
-// Secure server
-// const options = {
-//     key: fs.readFileSync('./ssl/mykey.key'),
-//     cert: fs.readFileSync('./ssl/cacert.pem'),
-// };
 
 // MUST change to https later
 const httpsServer = https.createServer(async (request, response) => {

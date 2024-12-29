@@ -1,10 +1,19 @@
 const mysql2 = require('mysql2');
+const fs = require('node:fs');
+const path = require('path');
+
+const caCert = fs.readFileSync(path.join(__dirname, 'ssl/ca.pem'));
+console.log(caCert);
 
 const connection = mysql2.createConnection({
-    user: 'root',
-    host: 'localhost',
-    password: 'Neptune-915462',
+    user: 'avnadmin',
+    host: 'mysql-3b75a0be-thanakonp6-4cb9.g.aivencloud.com',
+    port: 25688,
+    password: 'AVNS_DuGU5bbvZaMlw91qqt3',
     database: 'testapi',
+    ssl: {
+        ca: caCert,
+    }
 });
 
 function startConnection() {
