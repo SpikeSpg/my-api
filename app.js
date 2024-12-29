@@ -368,5 +368,5 @@ const httpsServer = https.createServer(async (request, response) => {
 
 // Secure listener
 httpsServer.listen(port, host, () => {
-    console.log(`Server is running at https://${host}:${port}`);
+    console.log(`Server is running at https://spikespg.github.io/my-api/`);
 });
