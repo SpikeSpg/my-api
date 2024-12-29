@@ -9,7 +9,7 @@ const connection = mysql2.createConnection({
     user: 'avnadmin',
     host: 'mysql-3b75a0be-thanakonp6-4cb9.g.aivencloud.com',
     port: 25688,
-    password: 'AVNS_DuGU5bbvZaMlw91qqt3',
+    password: AVN_SECRET,
     database: 'testapi',
     ssl: {
         ca: caCert,
