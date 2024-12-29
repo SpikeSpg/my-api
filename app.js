@@ -1,9 +1,10 @@
 const http = require('node:http');
 const https = require('node:https');
 const { makeQuery } = require('./auth.js');
-const fs = require('node:fs');
+// const fs = require('node:fs');
 
-const host = '127.0.0.1';
+const host = '0.0.0.0';
+const port = process.env.PORT || 4000;
 
 function metadata(request, response, code) {
     // Check the code to determine what the response should be
@@ -344,13 +345,13 @@ async function handleRequest(todo, resource, request, response) {
 }
 
 // Secure server
-const options = {
-    key: fs.readFileSync('./ssl/mykey.key'),
-    cert: fs.readFileSync('./ssl/cacert.pem'),
-};
+// const options = {
+//     key: fs.readFileSync('./ssl/mykey.key'),
+//     cert: fs.readFileSync('./ssl/cacert.pem'),
+// };
 
 // MUST change to https later
-const httpsServer = https.createServer(options, async (request, response) => {
+const httpsServer = https.createServer(async (request, response) => {
     const url = request.url;
     const method = request.method;
 
@@ -370,20 +371,7 @@ const httpsServer = https.createServer(options, async (request, response) => {
 
 });
 
-const httpServer = http.createServer((request, response) => {
-    // Redirect all HTTP requests to HTTPS
-    response.writeHead(301, {
-        'location' : 'https://localhost:443'
-    });
-    response.end();
-});
-
-// // Insecure listener
-httpServer.listen(80, host, () => {
-    console.log(`HTTP server running on http://${host}:80 and redirecting to HTTPS`);
-});
-
 // Secure listener
-httpsServer.listen(443, host, () => {
-    console.log(`Server is running at https://${host}:443`);
+httpsServer.listen(port, host, () => {
+    console.log(`Server is running at https://${host}:${port}`);
 });
