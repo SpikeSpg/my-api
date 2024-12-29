@@ -1,16 +1,17 @@
+require('dotenv').config();
+
 const mysql2 = require('mysql2');
 const fs = require('node:fs');
 const path = require('path');
 
 const caCert = fs.readFileSync(path.join(__dirname, 'ssl/ca.pem'));
-console.log(caCert);
 
 const connection = mysql2.createConnection({
-    user: 'avnadmin',
-    host: 'mysql-3b75a0be-thanakonp6-4cb9.g.aivencloud.com',
-    port: 25688,
-    password: AVN_SECRET,
-    database: 'testapi',
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    port: process.env.DB_PORT,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
     ssl: {
         ca: caCert,
     }
