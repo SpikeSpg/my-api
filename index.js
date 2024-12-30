@@ -21,11 +21,13 @@ function metadata(request, response, code) {
         const header = request.headers;
         console.log(header);
 
-        const userAgentString = header['sec-ch-ua'];
-        console.log(userAgentString);
+        const userAgentStringSecChUa = header['sec-ch-ua'];
+        console.log(userAgentStringSecChUa);
+        const userAgent = header['user-agent'];
+        console.log(userAgent);
 
         // Specify sec-ch-ua
-        if (userAgentString) {
+        if (userAgentStringSecChUa) {
             console.log('browser');
             const browsers = userAgentString.split(',').map(item => {
                 // Extract the browser name before ';v' (version information)
@@ -45,6 +47,22 @@ function metadata(request, response, code) {
                 return;
             }
         }
+
+        // If sec-ch-ua is not present, check user-agent directly
+        if (userAgent) {
+            const browserRegex = /(Mozilla|Chrome|Safari|Edge|Firefox|Opera|MSIE|Trident)/i; 
+
+            if (browserRegex.test(userAgent)) {
+                // If browser request root, give text
+                if (request.url === '/') {
+                    response.setHeader('Content-Type', 'text/plain');
+                    return;
+                }
+                response.setHeader('Content-Type', 'application/json');
+                return;
+            }
+        }
+
         // Not specify
         else {
             console.log('not browser');
