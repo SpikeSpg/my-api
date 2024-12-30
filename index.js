@@ -29,7 +29,7 @@ function metadata(request, response, code) {
         // Specify sec-ch-ua
         if (userAgentStringSecChUa) {
             console.log('browser');
-            const browsers = userAgentString.split(',').map(item => {
+            const browsers = userAgentStringSecChUa.split(',').map(item => {
                 // Extract the browser name before ';v' (version information)
                 return item.split(';')[0].trim().replace(/"/g, '');
             });
@@ -144,8 +144,7 @@ function urlSegmentation(url) {
 }
 
 function validRequest(response, resource, length, method) {
-    // 'pet', 'event', '
-    const resources = ['shop', 'customers'];
+    const resources = ['pet', 'event', 'shop', 'customers', 'users'];
 
     /*
         HEAD /* - Head on all of them.
