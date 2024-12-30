@@ -1,10 +1,10 @@
 const http = require('node:http');
 const https = require('node:https');
 const { makeQuery } = require('./auth.js');
-// const fs = require('node:fs');
+const fs = require('node:fs');
 
-const host = '0.0.0.0'; 
-const port = process.env.PORT || 10000;
+const host = '127.0.0.1';
+const port = process.env.PORT || 3000;
 
 function metadata(request, response, code) {
     // Check the code to determine what the response should be
@@ -345,8 +345,13 @@ async function handleRequest(todo, resource, request, response) {
     throw new Error('Cannot execute the query');
 }
 
+// const options = {
+//     pfx: fs.readFileSync('ssl/test_cert.pfx'),
+//     passphrase: 'sample',
+// };
+
 // MUST change to https later
-const httpsServer = https.createServer(async (request, response) => {
+const httpServer = http.createServer(async (request, response) => {
     const url = request.url;
     const method = request.method;
 
@@ -367,6 +372,6 @@ const httpsServer = https.createServer(async (request, response) => {
 });
 
 // Secure listener
-httpsServer.listen(port, host, () => {
-    console.log(`Server is running at https://${host}:${port}`);
+httpServer.listen(port, host, () => {
+    console.log(`Server is running at http://${host}:${port}`);
 });
