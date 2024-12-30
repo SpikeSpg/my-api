@@ -3,8 +3,8 @@ const https = require('node:https');
 const { makeQuery } = require('./auth.js');
 const fs = require('node:fs');
 
-const host = '127.0.0.1';
-const port = process.env.PORT || 3000;
+const host = '0.0.0.0';
+const port = process.env.PORT || 10000;
 
 function metadata(request, response, code) {
     // Check the code to determine what the response should be
