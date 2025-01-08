@@ -34,7 +34,7 @@ const httpServer = createServer((request, response) => {
 
     try {
         responseHeader(rqHeader, response);
-        // crud(rqMethod, rqEndpoint, response, rqHeader);
+        crud(rqMethod, rqEndpoint, response, rqHeader);
         response.end();
     } catch (error) {
         response.end(error);
