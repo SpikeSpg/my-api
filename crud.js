@@ -53,7 +53,8 @@ function crud(method, endpoint, rs, header) {
 
         if (count === 1) {
             if (method === 'GET') {
-                makeQuery(`SELECT * FROM ${enp}`);
+                // makeQuery(`SELECT * FROM ${enp}`);
+                console.log('hello world');
                 endLog();
                 return;
             }
