@@ -34,7 +34,9 @@ function formData(req, res) {
         console.log(`Saving to: ${uniqueFilename}`);
         uploads[fieldname] = uniqueFilename;
 
-        const saveTo = path.join(__dirname, 'static_assets', uniqueFilename);
+        const saveTo = path.join('https://github.com/SpikeSpg/my-api/tree/main/', 'static_assets', uniqueFilename);
+        console.log(saveTo);
+        
         const writeStream = fs.createWriteStream(saveTo);
         file.pipe(writeStream);
 
