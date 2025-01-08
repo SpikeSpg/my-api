@@ -1,6 +1,6 @@
 // This module concern with the likes of endpoint
 const { status } = require('./status');
-const { makeQuery } = require('./auth');
+// const { makeQuery } = require('./auth');
 
 function endLog() {
     console.log('..............................................................');
@@ -54,7 +54,6 @@ function crud(method, endpoint, rs, header) {
         if (count === 1) {
             if (method === 'GET') {
                 // makeQuery(`SELECT * FROM ${enp}`);
-                console.log('hello world');
                 endLog();
                 return;
             }
