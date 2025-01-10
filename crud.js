@@ -1,18 +1,22 @@
 // This module concern with the likes of endpoint
 const { status } = require('./status');
 const { makeQuery } = require('./auth');
+const { registration } = require('./registration');
+const { login } = require('./login');
 
 function endLog() {
     console.log('..............................................................');
 }
 
-function crud(method, endpoint, rs, header) {
+async function crud(method, endpoint, rs, header, stripedCT, data) {
     console.log('....................begin of crud log....................');
-    const legitEndpoints = ['users', 'restaurants'];
+    const legitEndpoints = ['users', 'restaurants', 'login'];
 
     console.log(method);
     console.log(endpoint);
     console.log(header);
+    console.log(stripedCT);
+    console.log(data);
 
     let count = 0;
     for (let char of endpoint) {
@@ -53,14 +57,23 @@ function crud(method, endpoint, rs, header) {
 
         if (count === 1) {
             if (method === 'GET') {
-                makeQuery(`SELECT * FROM ${enp}`);
                 endLog();
                 return;
             }
             else if (method === 'POST') {
-                console.log('p');
-                endLog();
-                return;
+                if (stripedCT === 'multipart/form-data') {
+                    if (enp === 'users') {
+                        const sql = await registration(data, enp);
+                        await makeQuery(sql);
+                        endLog();
+                        return;
+                    }
+                    else if (enp === 'login') {
+                        login(data, 'users');
+                        endLog();
+                        return;
+                    }
+                }
             }
         }
         else if (count === 2) {

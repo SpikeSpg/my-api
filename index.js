@@ -12,19 +12,12 @@ const port = process.env.PORT || 10000;
 // const port = 3000;
 // const host = '127.0.0.1';
 
-const httpServer = createServer((request, response) => {
+const httpServer = createServer(async (request, response) => {
     const rqEndpoint = request.url;
     const rqMethod = request.method;
     const rqHeader = request.headers;
-    let contentType = null;
-    if (rqMethod === 'POST') {
-        contentType = stripedCT(rqHeader);
-    }
-    console.log(contentType);
 
-    if (contentType === 'multipart/form-data') {
-        formData(request, response);
-    }
+    console.log(JSON.stringify(request.headers));
 
     if (rqEndpoint === '/favicon.ico') {
         response.writeHead(204);
@@ -32,9 +25,22 @@ const httpServer = createServer((request, response) => {
         return;
     }
 
+    let contentType = null;
+    if (rqMethod === 'POST') {
+        contentType = stripedCT(rqHeader);
+    }
+    console.log(contentType);
+
     try {
         responseHeader(rqHeader, response);
-        // crud(rqMethod, rqEndpoint, response, rqHeader);
+        let data = null;
+        if (contentType === 'multipart/form-data') {
+            data = await formData(request, response);
+        }
+        console.log(data);
+        console.log(response.statusCode);
+
+        crud(rqMethod, rqEndpoint, response, rqHeader, contentType, data);
         response.end();
     } catch (error) {
         response.end(error);

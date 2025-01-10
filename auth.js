@@ -11,12 +11,15 @@ const options = {
 const connection = mysql2.createConnection(options);
 
 function makeQuery(q) {
-    connection.query(q, (err, results, fields) => {
-        if (err) {
-            throw new Error(`Error executing query: ${err.message}`);
-        }
-        console.log('Query Results:', results);
-        console.log('Query Fields:', fields);
+    return new Promise((resolve, reject) => {
+        connection.query(q, (err, results, fields) => {
+            if (err) {
+                return reject(new Error(`Error executing query: ${err.message}`));
+            }
+            console.log('Query Results:', results);
+            console.log('Query Fields:', fields);
+            resolve(results);
+        });
     });
 }
 
