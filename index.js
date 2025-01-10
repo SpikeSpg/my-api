@@ -33,7 +33,6 @@ const httpServer = createServer(async (request, response) => {
 
     try {
         responseHeader(rqHeader, response);
-<<<<<<< HEAD
         let data = null;
         if (contentType === 'multipart/form-data') {
             data = await formData(request, response);
@@ -42,9 +41,6 @@ const httpServer = createServer(async (request, response) => {
         console.log(response.statusCode);
 
         crud(rqMethod, rqEndpoint, response, rqHeader, contentType, data);
-=======
-        crud(rqMethod, rqEndpoint, response, rqHeader);
->>>>>>> f1d028de3b61cd7217785f575926d4d55a7bf917
         response.end();
     } catch (error) {
         response.end(error);

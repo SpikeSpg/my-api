@@ -1,12 +1,8 @@
 // This module concern with the likes of endpoint
 const { status } = require('./status');
-<<<<<<< HEAD
 const { makeQuery } = require('./auth');
 const { registration } = require('./registration');
 const { login } = require('./login');
-=======
-// const { makeQuery } = require('./auth');
->>>>>>> f1d028de3b61cd7217785f575926d4d55a7bf917
 
 function endLog() {
     console.log('..............................................................');
@@ -61,10 +57,6 @@ async function crud(method, endpoint, rs, header, stripedCT, data) {
 
         if (count === 1) {
             if (method === 'GET') {
-<<<<<<< HEAD
-=======
-                // makeQuery(`SELECT * FROM ${enp}`);
->>>>>>> f1d028de3b61cd7217785f575926d4d55a7bf917
                 endLog();
                 return;
             }
