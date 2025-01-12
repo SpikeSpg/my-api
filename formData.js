@@ -22,7 +22,8 @@ function formData(req, res) {
             if (!fileInfo) {
                 console.error('No valid filename received.');
                 file.resume();
-                return;
+                const body = status(400, 'No valid filename received.', res);
+                reject(body);
             }
 
             const originalFilename = fileInfo.filename;

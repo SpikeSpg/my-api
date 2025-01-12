@@ -1,5 +1,10 @@
 // This module is only concern with extract body data out (not design for a type multipart)
-const { formData } = require('./formData');
+const { status } = require('./status');
+
+function endLog() {
+    console.log('..............................................................');
+}
+
 
 function bodyData(rq) {
     console.log('....................begin of bodyData log....................');
@@ -21,9 +26,13 @@ function bodyData(rq) {
         // jsonData = JSON.parse(body);
         // console.log(jsonData);
         // console.log(typeof(jsonData));
+        endLog();
         return body;
     });
-    console.log('..............................................................');
+
+    endLog();
+    const ret = status(404, 'No body was found.', rs);
+    return ret;
 }
 
 module.exports = {

@@ -27,18 +27,17 @@ async function crud(method, endpoint, rs, header, stripedCT, data) {
     console.log(count);
 
     if (count > 2) {
-        status(400, 'Invalid request format.', rs);
+        const body = status(400, 'Invalid request format.', rs);
         endLog();
-        return;
+        return body;
     }
 
     const enp = endpoint.slice(1);
     console.log(enp);
 
     if (endpoint.length === 1) {
-        rs.write('Welcome to the Group Fund API.');
         endLog();
-        return;
+        return 'Welcome to the Group Fund API.';
     }
 
     if (legitEndpoints.includes(enp)) {
@@ -62,16 +61,26 @@ async function crud(method, endpoint, rs, header, stripedCT, data) {
             }
             else if (method === 'POST') {
                 if (stripedCT === 'multipart/form-data') {
+                    // registration
                     if (enp === 'users') {
                         const sql = await registration(data, enp);
-                        await makeQuery(sql);
+                        console.log(sql);
+                        try {
+                            const body = await makeQuery(sql);
+                            console.log(body);
+                        } catch (error) {
+                            console.log(error);
+                        }
                         endLog();
-                        return;
+                        return body;
                     }
                     else if (enp === 'login') {
-                        login(data, 'users');
+                        // jwt
+                        const body = await login(data, 'users', rs);
+                        console.log(typeof(body));
+                        console.log(body);
                         endLog();
-                        return;
+                        return body;
                     }
                 }
             }

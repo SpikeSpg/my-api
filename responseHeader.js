@@ -6,7 +6,7 @@ function responseHeader(h, rs) {
 
     if (accept === '*/*' || accept === undefined) {
         rs.setHeader('Content-Type', 'application/json');
-        return;
+        return null;
     }
     console.log(typeof (accept));
     // [1, 1, 0.9, 1, 1, 1, 0.8, 0.7]
@@ -38,7 +38,7 @@ function responseHeader(h, rs) {
 
     rs.setHeader('Content-Type', maxKey);
     console.log('..............................................................');
-    return;
+    return null;
 }
 
 module.exports = {

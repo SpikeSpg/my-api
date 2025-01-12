@@ -6,9 +6,14 @@ const { bodyData } = require('./bodyData');
 const { stripedCT } = require('./stripedCT');
 const { formData } = require('./formData');
 
-const host = '0.0.0.0';
+// public (anyone can access)
+// const host = '0.0.0.0';
 const port = process.env.PORT || 10000;
 
+// for the lan(wifi) only
+const host = '192.168.0.137';
+
+// private (localhost)
 // const port = 3000;
 // const host = '127.0.0.1';
 
@@ -21,8 +26,8 @@ const httpServer = createServer(async (request, response) => {
 
     if (rqEndpoint === '/favicon.ico') {
         response.writeHead(204);
-        response.end();
-        return;
+        response.end('No icon to be displayed here.');
+        return null;
     }
 
     let contentType = null;
@@ -37,11 +42,17 @@ const httpServer = createServer(async (request, response) => {
         if (contentType === 'multipart/form-data') {
             data = await formData(request, response);
         }
+        else {
+            data = bodyData(request);
+        }
         console.log(data);
         console.log(response.statusCode);
 
-        crud(rqMethod, rqEndpoint, response, rqHeader, contentType, data);
-        response.end();
+        const body = await crud(rqMethod, rqEndpoint, response, rqHeader, contentType, data);
+        console.log(body);
+        console.log(typeof(body));
+        // never ever !! convert body!
+        response.end(body);
     } catch (error) {
         response.end(error);
     }
