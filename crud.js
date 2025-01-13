@@ -3,6 +3,8 @@ const { status } = require('./status');
 const { makeQuery } = require('./auth');
 const { registration } = require('./registration');
 const { login } = require('./login');
+const { jsonwebkeyset } = require('./jsonwebkeyset');
+
 
 function endLog() {
     console.log('..............................................................');
@@ -10,7 +12,7 @@ function endLog() {
 
 async function crud(method, endpoint, rs, header, stripedCT, data) {
     console.log('....................begin of crud log....................');
-    const legitEndpoints = ['users', 'restaurants', 'login'];
+    const legitEndpoints = ['users', 'restaurants', 'login', 'jwks'];
 
     console.log(method);
     console.log(endpoint);
@@ -56,8 +58,10 @@ async function crud(method, endpoint, rs, header, stripedCT, data) {
 
         if (count === 1) {
             if (method === 'GET') {
-                endLog();
-                return;
+                if (enp === 'jwks') {
+                    jsonwebkeyset();
+                    return null;
+                }
             }
             else if (method === 'POST') {
                 if (stripedCT === 'multipart/form-data') {
@@ -74,10 +78,10 @@ async function crud(method, endpoint, rs, header, stripedCT, data) {
                         endLog();
                         return body;
                     }
-                    else if (enp === 'login') {
-                        // jwt
+                    // jwt
+                    if (enp === 'login') {
                         const body = await login(data, 'users', rs);
-                        console.log(typeof(body));
+                        console.log(typeof (body));
                         console.log(body);
                         endLog();
                         return body;

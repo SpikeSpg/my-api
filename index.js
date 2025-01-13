@@ -30,30 +30,34 @@ const httpServer = createServer(async (request, response) => {
         return null;
     }
 
-    let contentType = null;
+    let contentType = rqHeader.contentType;
+    console.log(rqEndpoint);
+    let data = null;
+
+    // Not all the post has to have data, some just wanna send sensitive data
     if (rqMethod === 'POST') {
         contentType = stripedCT(rqHeader);
-    }
-    console.log(contentType);
-
-    try {
-        responseHeader(rqHeader, response);
-        let data = null;
         if (contentType === 'multipart/form-data') {
             data = await formData(request, response);
         }
         else {
             data = bodyData(request);
         }
+    }
+    console.log(contentType);
+
+    try {
+        responseHeader(rqHeader, response);
         console.log(data);
         console.log(response.statusCode);
 
         const body = await crud(rqMethod, rqEndpoint, response, rqHeader, contentType, data);
+        console.log('----main----',typeof(body));
         console.log(body);
-        console.log(typeof(body));
-        // never ever !! convert body!
+        // never ever !! convert body types!
         response.end(body);
     } catch (error) {
+        console.log('Main log error.');
         response.end(error);
     }
 
